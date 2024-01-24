@@ -1,4 +1,4 @@
-const path = require('path')
+const path  = require('path')
 
 module.exports = {
   env: {
@@ -14,13 +14,13 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:promise/recommended',
     'prettier',
-    'next'
   ],
   plugins: [
     'eslint-comments',
     'prettier',
     'promise', 
-    // 'react',
+    'react',
+    "react-hooks",
     'simple-import-sort',
     '@typescript-eslint',
 
@@ -38,7 +38,7 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
   },
   parser: '@typescript-eslint/parser',
-  ignorePatterns: ['dist', 'node_modules', '.next'],
+  ignorePatterns: ['dist', 'node_modules', '.next','.eslint.cjs'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': [

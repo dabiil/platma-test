@@ -4,4 +4,4 @@ build
 node_modules
 .github
 globalWindow.d.ts
-.eslintrc.js
+.eslintrc.cjs
