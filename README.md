@@ -1,5 +1,7 @@
 # Platma test task
 
+**Hosted** [Netlify:PlatmaTestTask](https://platma-test.netlify.app/)
+
 **Run**: npm run dev
 
 **Build**: npm run build
