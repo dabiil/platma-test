@@ -29,27 +29,6 @@
   "schemes": ["https"],
   "paths": {
     "/posts": {
-      "post": {
-        "tags": ["posts"],
-        "summary": "Add new post",
-        "requestBody": {
-          "$ref": "#/definitions/Post"
-        },
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Post"
-            }
-          },
-          "404": {
-            "description": "not found",
-            "schema": {
-              "$ref": "#/definitions/NotFoundError"
-            }
-          }
-        }
-      },
       "get": {
         "tags": ["posts"],
         "operationId": "getPosts",
@@ -63,6 +42,44 @@
               "items": {
                 "$ref": "#/definitions/Post"
               }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["posts"],
+        "summary": "Add new post",
+        "requestBody": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "integer",
+                "description": "Author Id",
+                "format": "int64"
+              },
+              "title": {
+                "type": "string",
+                "description": "Post Title"
+              },
+              "body": {
+                "type": "string",
+                "description": "Post Content"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Post"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/definitions/NotFoundError"
             }
           }
         }
@@ -115,7 +132,24 @@
         "tags": ["posts"],
         "summary": "Update post",
         "requestBody": {
-          "$ref": "#/definitions/Post"
+          "schema": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "integer",
+                "description": "Author Id",
+                "format": "int64"
+              },
+              "title": {
+                "type": "string",
+                "description": "Post Title"
+              },
+              "body": {
+                "type": "string",
+                "description": "Post Content"
+              }
+            }
+          }
         },
         "parameters": [
           {
@@ -170,24 +204,49 @@
       "get": {
         "tags": ["comments"],
         "operationId": "getComments",
-        "summary": "Get all available comments",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "type": "integer",
-            "description": "Filter by comment ID",
-            "required": false
-          },
-          {
-            "name": "postId",
-            "in": "query",
-            "type": "integer",
-            "description": "Filter by post ID",
-            "required": false
-          }
-        ],
+        "summary": "Get all comments",
         "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Comment"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["comments"],
+        "operationId": "getComments",
+        "summary": "Add new comments",
+        "produces": ["application/json"],
+        "requestBody": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "postId": {
+                "type": "integer",
+                "description": "Post Id",
+                "format": "int64"
+              },
+              "name": {
+                "type": "string",
+                "description": "Comment name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email"
+              },
+              "body": {
+                "type": "string",
+                "description": "Comment text"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "successful operation",
@@ -206,6 +265,86 @@
         "tags": ["comments"],
         "operationId": "getComment",
         "summary": "Get specific comment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the comment to retrieve",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Comment"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/definitions/NotFoundError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["comments"],
+        "summary": "Update comment",
+        "requestBody": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "postId": {
+                "type": "integer",
+                "description": "Post Id",
+                "format": "int64"
+              },
+              "name": {
+                "type": "string",
+                "description": "Comment name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email"
+              },
+              "body": {
+                "type": "string",
+                "description": "Comment text"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the comment to retrieve",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Comment"
+            }
+          },
+          "404": {
+            "description": "not found",
+            "schema": {
+              "$ref": "#/definitions/NotFoundError"
+            }
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["comments"],
+        "operationId": "getComment",
+        "summary": "Delete comment",
         "parameters": [
           {
             "name": "id",
@@ -275,132 +414,7 @@
         }
       }
     },
-    "Album": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "userId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "title": {
-          "type": "string"
-        }
-      }
-    },
-    "Photo": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "albumId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "title": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string",
-          "format": "uri"
-        },
-        "thumbnailUrl": {
-          "type": "string",
-          "format": "uri"
-        }
-      }
-    },
-    "Todo": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "userId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "title": {
-          "type": "string"
-        },
-        "completed": {
-          "type": "boolean"
-        }
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string",
-          "format": "email"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "website": {
-          "type": "string"
-        },
-        "company": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "catchPhrase": {
-              "type": "string"
-            },
-            "bs": {
-              "type": "string"
-            }
-          }
-        },
-        "address": {
-          "type": "object",
-          "properties": {
-            "street": {
-              "type": "string"
-            },
-            "suite": {
-              "type": "string"
-            },
-            "city": {
-              "type": "string"
-            },
-            "zipcode": {
-              "type": "string"
-            },
-            "geo": {
-              "type": "object",
-              "properties": {
-                "lat": {
-                  "type": "string"
-                },
-                "lng": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
+
     "NotFoundError": {
       "type": "object"
     }

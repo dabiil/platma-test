@@ -12,16 +12,19 @@ export const enum APIUrls {
   Comments = 'comments',
 }
 
+export interface IParam {
+  name: string;
+  required: boolean;
+  type: 'integer' | 'string';
+  description: string;
+}
+
 export interface IAction {
   url: string;
   method: Method;
   summary: string;
-  parameters?: {
-    name: string;
-    required: boolean;
-    type: 'integer' | 'string';
-    description: string;
-  }[];
+  parameters?: IParam[];
+  requestBody?: IParam[];
 }
 
 export interface IEntity {

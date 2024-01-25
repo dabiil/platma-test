@@ -5,6 +5,7 @@ import { FormikContext, useFormik } from 'formik';
 import { fetch } from 'src/api';
 import { IAction } from 'src/types';
 
+import { Body } from './Body';
 import { normalizeUrl } from './helpers';
 import { Params } from './Params';
 import { ActionModalForm } from './types';
@@ -37,8 +38,6 @@ export const ActionModal: React.FC<IActionModalProps> = ({ action, onClose }) =>
   const formik = useFormik<ActionModalForm>({ initialValues, onSubmit: () => {} });
   const { values, resetForm } = formik;
 
-  console.log(formik.values);
-  console.log(action);
   const handleRequest = async () => {
     if (!action) {
       return;
@@ -47,6 +46,7 @@ export const ActionModal: React.FC<IActionModalProps> = ({ action, onClose }) =>
     const response = await fetch({
       method: action.method,
       url: normalizeUrl(action.url, values.parameters),
+      body: values.body,
     });
 
     console.log('Response:  ', response);
@@ -66,6 +66,7 @@ export const ActionModal: React.FC<IActionModalProps> = ({ action, onClose }) =>
           </Typography>
           <FormikContext.Provider value={formik}>
             <Params action={action!} />
+            <Body action={action!} />
           </FormikContext.Provider>
         </Box>
         <Divider sx={{ m: '20px 0' }} variant='fullWidth' />

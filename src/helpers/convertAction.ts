@@ -6,7 +6,12 @@ type SchemaActions = Record<
   {
     parameters?: any[];
     summary: string;
-    requestBody?: any;
+    requestBody?: {
+      schema: {
+        type: 'object';
+        properties: any;
+      };
+    };
   }
 >;
 
@@ -17,5 +22,14 @@ export const convertActions = (schemaActions: [string, SchemaActions][]): IActio
       summary: action.summary,
       url,
       parameters: action.parameters,
+      requestBody: action.requestBody?.schema?.properties
+        ? Object.entries(action.requestBody.schema.properties).map(
+            ([key, value]) =>
+              ({
+                ...(value as {}),
+                name: key,
+              }) as any,
+          )
+        : undefined,
     })),
   );

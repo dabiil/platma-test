@@ -17,7 +17,12 @@ declare module 'src/schema.json' {
         {
           parameters?: any[];
           summary: string;
-          requestBody?: any;
+          requestBody?: {
+            schema: {
+              type: 'object';
+              properties: any;
+            };
+          };
         }
       >
     >;

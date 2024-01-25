@@ -2,8 +2,6 @@ import { convertActions } from 'src/helpers';
 import APISchema from 'src/schema.json';
 import { APIUrls, EntityType, IEntity } from 'src/types';
 
-console.log(APISchema);
-
 const schemaPathsEntries = Object.entries(APISchema.paths);
 
 export const entities: IEntity[] = [
