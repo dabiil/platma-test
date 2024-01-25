@@ -11,8 +11,8 @@ export default defineConfig({
     host: true,
   },
   plugins: [
-    react(),
     tsconfigPaths(),
+    react(),
     legacy({
       targets: ['defaults', 'not IE 11'],
     }),

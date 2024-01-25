@@ -3,6 +3,6 @@
 build
 node_modules
 .github
-globalWindow.d.ts
+global.d.ts
 .eslintrc.cjs
 vite.config.ts

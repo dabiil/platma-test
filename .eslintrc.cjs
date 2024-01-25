@@ -122,7 +122,7 @@ module.exports = {
           // External packages.
           ['^react', '^@?\\w'],
           // Internal packages.
-          ['^@containers', '^@components'],
+          ['^containers', '^components', '^hooks'],
           // Internal folders.
           ['^src/'],
           // Parent imports.
@@ -130,7 +130,7 @@ module.exports = {
           // Other relative imports. Put same-folder imports last.
           ['^\\./(?=[^/]*?/)', '^\\.'],
           // Style and types imports.
-          ['\\.s?css$', '\\.styles', '\\.types'],
+          ['\\.s?css$', '\\.styles', '\\.types', '^types'],
         ],
       },
     ],
